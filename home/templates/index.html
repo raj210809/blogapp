@@ -1,0 +1,51 @@
+<div style="background-color: aqua;height: 100vh;">
+  <header style="height: 3rem; background-color: grey;display: flex;justify-content: flex-start;align-items: center;font-weight: bold;color: aqua;">
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'addblog' username=request.user.username %}" style="text-decoration: none;margin-right: 3rem;">Add Blog</a>
+      <a href="{% url 'logout' %}" style="text-decoration: none;">logout</a>
+      <div style="position: relative;">
+        <input placeholder="search for blogs" name="query" type="text" style="margin-left: 9rem;width: 15rem;" id="search">
+        <div id="suggestions" style="height: fit-content;background-color: black;width: 15rem;color: white;margin-left: 9rem;"></div>
+      </div>
+    {% else %}
+      <a href="{% url 'login' %}" style="text-decoration: none;margin-right: 3rem;">Login</a>
+      <a href="{% url 'signup' %}" style="text-decoration: none;">Signup</a>
+    {% endif %}
+  </header>
+  <div>
+    {% if request.user.is_authenticated %}
+      <h2>Welcome, {{ request.user.username }}!</h2>
+      {% if blogs %}
+      <h4>Titles of posted blogs</h4>
+        <ul>
+        {% for blog in blogs %}
+          <li><a href="{% url 'seeblog' blog_id=blog.id %}" style="text-decoration: none;">{{blog.title}}</a></li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        <h4>There is no blogs currently , you can add so that other people can see your blogs</h4>
+      {% endif %}
+    {%else%}
+      <h1><pre>
+        Welcome to this blogapp
+        <span style="color: rgb(6, 21, 16);">Login to get the blogs</span>
+      </pre></h1>
+    {% endif %}
+  </div>
+</div>
+<script>
+  document.getElementById('search').addEventListener('input',async (e)=>{
+    let query = e.target.value.trim()
+
+    if(query){
+      let response = await fetch("{% url 'suggestion' %}?query="+query)
+      console.log(response)
+      let data = await response.json()
+      console.log(data)
+      document.getElementById('suggestions').innerHTML=data.suggestion
+    }
+    else{
+      document.getElementById('suggestions').innerHTML= ''
+    }
+  })
+</script>

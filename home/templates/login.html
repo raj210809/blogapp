@@ -1,0 +1,12 @@
+<div style="height: 100vh;display: flex;justify-content: center;align-items: center;flex-direction: column;background-color: aqua;">
+    <a href="{% url 'home' %}" style="text-decoration: none;">Home</a>
+    <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;height: 25rem;width: 20rem;background-color: rgb(30, 120, 90);">
+        <h1>Login</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a href="{% url 'signup' %}" style="color: rgb(14, 14, 102);text-decoration: none;">Dont have Account Create</a>
+    <button type="submit" style="background-color: blue;border-radius: 5rem;">Login</button>
+</form>
+    </div>
+</div>

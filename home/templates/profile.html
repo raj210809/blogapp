@@ -1,0 +1,25 @@
+
+<div style="height: 100vh;background-color: aqua;">
+    <a href="{% url 'home' %}" style="text-decoration: none;">Home</a>
+<div style="background-color: grey;display: flex;justify-content: center;">
+    {% if user != request.user.username %}
+        <h2>{{user}}</h2>
+    {% else %}
+        <h2>Your Profile</h2>
+    {% endif %}
+</div>
+{% if blogs %}
+    {% if user != request.user.username %}
+        <h4>these are the posted blogs of {{user}}</h4>
+    {% else %}
+        <h4>your posted blogs</h4>
+    {% endif %}
+    <ul>
+    {% for blog in blogs %}
+        <li><a href="{% url 'seeblog' blog_id=blog.id %}" style="text-decoration: none;">{{blog.title}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <h4>Not posted yet!!</h4>
+{% endif %}
+</div>

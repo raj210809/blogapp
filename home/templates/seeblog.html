@@ -1,0 +1,18 @@
+<div style="height: 100vh;background-color: aqua;">
+    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+        <a href="{% url 'home' %}" style="text-decoration: none;">Home</a>
+        {% if request.user == blog.published_by %}
+        <div>
+            <a href="{% url 'update' blog_id=blog.id %}" style="text-decoration: none;margin-right: 2rem;">Update</a>
+            <a href="{% url 'delete' blog_id=blog.id %}" style="text-decoration: none;">Delete</a>
+        </div>
+        {% endif %}
+    </div>
+    <header style="background-color: rgb(176, 171, 171);height: fit-content;justify-content: center;display: flex;">
+        <h2>{{blog.title}}</h2>
+    </header>
+    <div style="display: flex;flex-direction: row;justify-content: end;"><p>published by : <a href="{% url 'profile' username=blog.published_by %}" style="text-decoration: none;">{{blog.published_by}}</a></p></div>
+    <div style="height: 100vh;">
+        <h4>{{blog.content}}</h4>
+    </div>
+</div>
